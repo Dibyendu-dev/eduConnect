@@ -18,7 +18,7 @@ const categorySchema = new Schema({
 
     type: String,
   },
-});
+}, {timestamps: true});
 
 export const Category =
   mongoose.models.Category ?? mongoose.model("Category", categorySchema);

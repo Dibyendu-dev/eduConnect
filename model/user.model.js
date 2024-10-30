@@ -37,6 +37,6 @@ const userSchema = new Schema({
         required: false,
         type: String,
     },
-});
+}, {timestamps: true});
 
 export const User = mongoose.models.User ?? mongoose.model("User", userSchema);

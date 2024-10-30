@@ -7,17 +7,19 @@ const testimonialSchema = new Schema({
     },
     user: {
         required: true,
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
     courseId: {
         required: true,
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "Course",
     },
     rating: {
         required: true,
         type: Number,
     },
-});
+}, {timestamps: true});
 
 export const Testimonial =
     mongoose.models.Testimonial ??

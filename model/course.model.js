@@ -5,6 +5,10 @@ const courseSchema = new Schema({
         required: true,
         type: String,
     },
+    subtitle: {
+        required: true,
+        type: String
+    },
     description: {
         required: true,
         type: String,
@@ -41,7 +45,13 @@ const courseSchema = new Schema({
     testimonials: [{
         type:  Schema.Types.ObjectId, ref: "Testimonial"
     }],
-});
+
+    learning: {
+        required: true,
+        type: [String]
+    },
+
+}, {timestamps: true});
 
 export const Course =
     mongoose.models.Course ?? mongoose.model("Course", courseSchema);
