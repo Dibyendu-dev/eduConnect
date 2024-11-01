@@ -21,9 +21,9 @@ const enrollmentSchema = new Schema({
     type: String,
   },
 
-  course: { type: Schema.ObjectId, ref: "Course" },
+  course: { type: Schema.Types.ObjectId, ref: "Course" },
 
-  student: { type: Schema.ObjectId, ref: "User" },
+  student: { type: Schema.Types.ObjectId, ref: "User" },
 }, {timestamps: true});
 
 export const Enrollment =
