@@ -1,16 +1,16 @@
-import { Course } from "../model/course.model";
-import { Category } from "../model/category.model";
-import { User } from "../model/user.model";
-import { Testimonial } from "../model/testimonial.model";
-import { Module } from "../model/module.model";
-import {  getEnrollmentsForCourse } from "./enrollment";
-import { replaceMongoIdInArray,replaceMongoIdInObject } from "@/lib/convertdata";
-import {  getTestimonialsForCourse } from "./testimonial";
+import { Course } from "@/model/course-model";
+import { Category } from "@/model/category-model";
+import { User } from "@/model/user-model";
+import { Testimonial } from "@/model/testimonial-model";
+import { Module } from "@/model/module.model";
+
+import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/lib/convertData";
+
+import { getEnrollmentsForCourse } from "./enrollments";
+import { getTestimonialsForCourse } from "./testimonials";
 
 export async function getCourseList() {
-    const courses = await Course.find({})
-    .select(["title","subtitle", "thumbnail", "price",  "category", "instructor",  "modules"])
-    .populate({
+    const courses = await Course.find({}).select(["title", "subtitle", "thumbnail", "modules", "price", "category", "instructor"]).populate({
         path: "category",
         model: Category
     }).populate({
@@ -23,8 +23,7 @@ export async function getCourseList() {
         path: "modules",
         model: Module
     }).lean();
-
-    return replaceMongoIdInArray(courses)
+    return replaceMongoIdInArray(courses);
 }
 
 export async function getCourseDetails(id) {
@@ -40,14 +39,13 @@ export async function getCourseDetails(id) {
         model: Testimonial,
         populate: {
             path: "user",
-            model: User,
-           
+            model: User
         }
     }).populate({
         path: "modules",
         model: Module
     }).lean();
-   
+
     return replaceMongoIdInObject(course)
 }
 

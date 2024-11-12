@@ -25,6 +25,6 @@ const moduleSchema = new Schema({
     required: true,
     type: [String],
   },
-}, {timestamps: true});
+});
 
 export const Module = mongoose.models.Module ?? mongoose.model("Module", moduleSchema);

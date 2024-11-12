@@ -30,6 +30,6 @@ const lessonSchema = new Schema({
     required: true,
     type: String
   },
-}, {timestamps: true});
+});
 
 export const Lesson = mongoose.models.Lesson ?? mongoose.model("Lesson", lessonSchema);
