@@ -21,6 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 import { useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export function MainNav({ items, children }) {
     const { data: session } = useSession();
@@ -28,10 +29,13 @@ export function MainNav({ items, children }) {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [loginSession, setLoginSession] = useState(null);
 
-    console.log(loginSession);
+    // console.log(loginSession);
+    if(session?.error === "RefreshAccessTokenError") {
+        redirect("/login");
+    }
 
     useEffect(() => {
-        console.log("test");
+        // console.log("test");
         setLoginSession(session);
     }, [session]);
 
