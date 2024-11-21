@@ -1,6 +1,6 @@
 import { LoginForm } from "./_components/login-form";
-import  SocialLogins  from "./_components/social-login";
 
+import SocialLogins from "./_components/social-logins";
 
 const LoginPage = () => {
   return (

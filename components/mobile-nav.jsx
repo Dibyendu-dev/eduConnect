@@ -13,6 +13,7 @@ import { Button, buttonVariants } from "./ui/button";
 
 import { useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
+
 import { redirect } from "next/navigation";
 
 export function MobileNav({ items, children }) {
@@ -20,11 +21,11 @@ export function MobileNav({ items, children }) {
 
   const { data: session } = useSession();
 
-  const [loginSession, setLoginSession] = useState(null);
+  if (session?.error === 'RefreshAccessTokenError') {
+    redirect("/login")
+  }
 
-  if(session?.error === "RefreshAccessTokenError") {
-    redirect("/login");
-}
+  const [loginSession, setLoginSession] = useState(null);
 
   useEffect(() => {
     console.log("test");

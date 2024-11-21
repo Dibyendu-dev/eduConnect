@@ -28,14 +28,13 @@ export function MainNav({ items, children }) {
 
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [loginSession, setLoginSession] = useState(null);
+    console.log(session);
 
-    // console.log(loginSession);
-    if(session?.error === "RefreshAccessTokenError") {
-        redirect("/login");
+    if (session?.error === 'RefreshAccessTokenError') {
+        redirect("/login")
     }
 
     useEffect(() => {
-        // console.log("test");
         setLoginSession(session);
     }, [session]);
 
