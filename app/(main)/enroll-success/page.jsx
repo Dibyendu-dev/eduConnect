@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import { getCourseDetails } from "@/queries/courses";
 import { getUserByEmail } from "@/queries/users";
 import { stripe } from "@/lib/stripe";
+import { sendEmails } from "@/lib/emails";
+import { enrollForCourse } from "@/queries/enrollments";
 
 const Success = async ({ searchParams: { session_id, courseId } }) => {
   if (!session_id) throw new Error("No session id found");
@@ -29,7 +31,27 @@ const Success = async ({ searchParams: { session_id, courseId } }) => {
   const productName = course?.title;
 
   if (paymentStatus === "succeeded") {
+    //update in database
+    const enrolled = await enrollForCourse( course?.id, loggedInUser?.id, "stripe");
+
+
    //send email
+   const instructorName= `${course?.instructor?.firstName} ${course?.instructor?.lastName}`;
+   const instructorEmail = course?.instructor?.email;
+   const emailToSend = [
+    {
+      to: instructorEmail,
+      subject:  `You have a new student enrolled in your course ${productName}`,
+      message: `congratulations  ${instructorName}, You have a new student enrolled in your course ${productName}.`
+    
+    },{
+      to: customerEmail,
+      subject:  `You have enrolled in ${productName}`,
+      message: `congratulations  ${customerName}, You have enrolled in ${productName}.`
+    }
+   ]
+
+   const emailSentResponse = await sendEmails(emailToSend);
   }
 
   return (
